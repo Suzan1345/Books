@@ -1,7 +1,13 @@
 package de.htw.Books.web.Model;
+import jakarta.persistence.*;
 
+
+@Entity
+@Table(name = "books")
 public class ModelBooks {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
         private String title;
         private String author;
