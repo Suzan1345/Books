@@ -14,14 +14,16 @@ import java.util.List;
 @CrossOrigin // optional: ggf. Origin einschränken
 public class BookController {
 
-    private record CreateBookRequest(@NotBlank String title, @NotBlank String author) {}
+    private record CreateBookRequest(@NotBlank String title, @NotBlank String author, @NotBlank String genre,
+                                     @NotBlank Long isbn, @NotBlank String desc, @NotBlank int rating) {}
 
     private final BookRepository repo;
     public BookController(BookRepository repo) { this.repo = repo; }
 
-    @PostMapping("/books")
+    @PostMapping
     public ResponseEntity<ModelBooks> create(@Valid @RequestBody CreateBookRequest req) {
-        ModelBooks saved = repo.save(new ModelBooks(null, req.title(), req.author()));
+        ModelBooks saved = repo.save(new ModelBooks(null, req.title(), req.author(), req.genre(),
+                req.isbn(), req.desc(), req.rating() ));
         return ResponseEntity.ok(saved);
     }
 

@@ -11,13 +11,22 @@ public class ModelBooks {
         private Long id;
         private String title;
         private String author;
+        private String genre;
+        private Long isbn;
+        private String desc;
+        private int rating;
 
         public ModelBooks() {}
 
-        public ModelBooks(Long id, String title, String author) {
+        public ModelBooks(Long id, String title, String author, String genre,
+                          Long isbn, String desc, int rating) {
             this.id = id;
             this.title = title;
             this.author = author;
+            this.genre = genre;
+            this.isbn = isbn;
+            this.desc = desc;
+            this.rating = rating;
         }
 
         // Getter und Setter
@@ -29,5 +38,21 @@ public class ModelBooks {
 
         public String getAuthor() { return author; }
         public void setAuthor(String author) { this.author = author; }
-    }
+
+    public String getGenre(){ return genre;}
+    public void setGenre(String genre){this.genre = genre;}
+
+    public Long getIsbn(){return isbn;}
+    public void setIsbn(Long isbn){this.isbn = isbn;}
+
+    public String getDesc(){return desc;}
+    public void setDesc(String desc) {
+        this.desc = desc;}
+
+    public int getRating() {
+        return rating;}
+
+    public void setRating(int rating) {
+        this.rating = rating;}
+}
 
