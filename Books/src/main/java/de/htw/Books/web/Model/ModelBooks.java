@@ -13,19 +13,19 @@ public class ModelBooks {
         private String author;
         private String genre;
         private Long isbn;
-        private String desc;
+        private String desch;
         private int rating;
 
         public ModelBooks() {}
 
         public ModelBooks(Long id, String title, String author, String genre,
-                          Long isbn, String desc, int rating) {
+                          Long isbn, String desch, int rating) {
             this.id = id;
             this.title = title;
             this.author = author;
             this.genre = genre;
             this.isbn = isbn;
-            this.desc = desc;
+            this.desch = desch;
             this.rating = rating;
         }
 
@@ -45,9 +45,9 @@ public class ModelBooks {
     public Long getIsbn(){return isbn;}
     public void setIsbn(Long isbn){this.isbn = isbn;}
 
-    public String getDesc(){return desc;}
-    public void setDesc(String desc) {
-        this.desc = desc;}
+    public String getDesc(){return desch;}
+    public void setDesc(String desch) {
+        this.desch = desch;}
 
     public int getRating() {
         return rating;}

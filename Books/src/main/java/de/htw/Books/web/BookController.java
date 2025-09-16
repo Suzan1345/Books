@@ -13,11 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
-@CrossOrigin // optional: ggf. Origin einschränken
+@CrossOrigin(
+        origins = "https://books-frontend-klg7.onrender.com",
+        allowedHeaders = "*",
+        methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS }
+)// optional: ggf. Origin einschränken
 public class BookController {
 
     private record CreateBookRequest(@NotBlank String title, @NotBlank String author, @NotBlank String genre,
-                                     @NotNull @Positive Long isbn, @NotBlank String desc, @NotNull int rating) {}
+                                     @NotNull @Positive Long isbn, @NotBlank String desch, @NotNull int rating) {}
 
     private final BookRepository repo;
     public BookController(BookRepository repo) { this.repo = repo; }
@@ -25,7 +29,7 @@ public class BookController {
     @PostMapping
     public ResponseEntity<ModelBooks> create(@Valid @RequestBody CreateBookRequest req) {
         ModelBooks saved = repo.save(new ModelBooks(null, req.title(), req.author(), req.genre(),
-                req.isbn(), req.desc(), req.rating() ));
+                req.isbn(), req.desch(), req.rating() ));
         return ResponseEntity.ok(saved);
     }
 
