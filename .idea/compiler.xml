@@ -11,7 +11,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Books.Books.main" target="21" />
       <module name="Books.Books.main~1" target="21" />
+      <module name="Books.Books.test" target="21" />
       <module name="Books.Books.test~1" target="21" />
     </bytecodeTargetLevel>
   </component>
