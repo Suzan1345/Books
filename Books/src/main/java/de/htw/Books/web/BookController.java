@@ -1,31 +1,33 @@
 package de.htw.Books.web;
 
 import de.htw.Books.web.Model.ModelBooks;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books")
-@CrossOrigin(origins = "*")
+@RequestMapping("/books")
+@CrossOrigin // optional: ggf. Origin einschränken
 public class BookController {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private record CreateBookRequest(@NotBlank String title, @NotBlank String author) {}
+
+    private final BookRepository repo;
+    public BookController(BookRepository repo) { this.repo = repo; }
+
+    @PostMapping("/books")
+    public ResponseEntity<ModelBooks> create(@Valid @RequestBody CreateBookRequest req) {
+        ModelBooks saved = repo.save(new ModelBooks(null, req.title(), req.author()));
+        return ResponseEntity.ok(saved);
+    }
+
 
     @GetMapping
-    public List<ModelBooks> getBooks() {
-        return List.of(
-                new ModelBooks(1L, "Der kleine Prinz", "Antoine de Saint-Exupéry"),
-                new ModelBooks(2L, "Harry Potter", "J.K. Rowling")
-        );
+    public List<ModelBooks> all() {
+        return repo.findAll();
     }
-
-    @PostMapping
-    public ModelBooks createBook(@RequestBody ModelBooks book) {
-        // Dummy-Antwort, Datenbankzugriff entfernt
-        return new ModelBooks(999L, book.getTitle(), book.getAuthor());
-    }
-
 }

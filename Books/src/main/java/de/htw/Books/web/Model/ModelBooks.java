@@ -12,7 +12,7 @@ public class ModelBooks {
         private String title;
         private String author;
 
-        public ModelBooks() {} // Default-Konstruktor (wichtig für JSON)
+        public ModelBooks() {}
 
         public ModelBooks(Long id, String title, String author) {
             this.id = id;
