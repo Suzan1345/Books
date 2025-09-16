@@ -14,10 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/books")
 @CrossOrigin(
-        origins = "https://books-frontend-klg7.onrender.com",
+        origins = {
+                "https://books-frontend-klg7.onrender.com",
+                "http://localhost:5173" // für lokale Tests
+        },
         allowedHeaders = "*",
         methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS }
-)// optional: ggf. Origin einschränken
+)
 public class BookController {
 
     private record CreateBookRequest(@NotBlank String title, @NotBlank String author, @NotBlank String genre,
@@ -38,4 +41,20 @@ public class BookController {
     public List<ModelBooks> all() {
         return repo.findAll();
     }
+    // GET /books/{id}
+    @GetMapping("/{id}")
+    public ResponseEntity<ModelBooks> byId(@PathVariable Long id) {
+        return repo.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // GET /books/only
+    @GetMapping("/only")
+    public ResponseEntity<ModelBooks> only() {
+        return repo.findFirstByOrderByIdAsc()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }
