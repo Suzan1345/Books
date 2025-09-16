@@ -15,7 +15,7 @@ import java.util.List;
 public class BookController {
 
     private record CreateBookRequest(@NotBlank String title, @NotBlank String author, @NotBlank String genre,
-                                     @NotBlank Long isbn, @NotBlank String desc, @NotBlank int rating) {}
+                                     @NotNull Long isbn, @NotBlank String desc, @NotNull int rating) {}
 
     private final BookRepository repo;
     public BookController(BookRepository repo) { this.repo = repo; }
