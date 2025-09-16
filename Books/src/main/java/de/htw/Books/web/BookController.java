@@ -38,8 +38,13 @@ public class BookController {
 
 
     @GetMapping
-    public List<ModelBooks> all() {
-        return repo.findAll();
+    public List<ModelBooks> all(@RequestParam(required = false) String genre) {
+        if (genre == null || genre.isBlank()) {
+            return repo.findAll();
+        }
+        return repo.findByGenreContainingIgnoreCase(genre.trim());
+        // Für exakte Treffer stattdessen:
+        // return repo.findByGenreIgnoreCase(genre.trim());
     }
     // GET /books/{id}
     @GetMapping("/{id}")
