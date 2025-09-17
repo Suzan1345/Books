@@ -40,13 +40,17 @@ public class BookController {
 
 
     @GetMapping
-    public List<ModelBooks> all(@RequestParam(required = false) String genre) {
-        if (genre == null || genre.isBlank()) {
-            return repo.findAll();
+    public List<ModelBooks> all(
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String title
+    ) {
+        if (title != null && !title.isBlank()) {
+            return repo.findByTitleContainingIgnoreCase(title.trim());
         }
-        return repo.findByGenreContainingIgnoreCase(genre.trim());
-        // Für exakte Treffer stattdessen:
-        // return repo.findByGenreIgnoreCase(genre.trim());
+        if (genre != null && !genre.isBlank()) {
+            return repo.findByGenreContainingIgnoreCase(genre.trim());
+        }
+        return repo.findAll();
     }
     // GET /books/{id}
     @GetMapping("/{id}")
@@ -56,13 +60,7 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /books/only
-    @GetMapping("/only")
-    public ResponseEntity<ModelBooks> only() {
-        return repo.findFirstByOrderByIdAsc()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+
 
     // DTO fürs Request-Body
     public record CommentDto(String text) {}

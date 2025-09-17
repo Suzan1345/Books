@@ -10,4 +10,5 @@ public interface BookRepository extends JpaRepository<ModelBooks, Long> {
     // Liefert das erste Buch (nach ID aufsteigend)
     Optional<ModelBooks> findFirstByOrderByIdAsc();
     List<ModelBooks> findByGenreContainingIgnoreCase(String genre);
+    List<ModelBooks> findByTitleContainingIgnoreCase(String title);
 }
